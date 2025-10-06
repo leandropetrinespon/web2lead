@@ -1,0 +1,91 @@
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+ 
+<form action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DWE00000Fa0k1" method="POST" id="webToLeadForm">
+ 
+  <input type="hidden" name="oid" value="00DWE00000Fa0k1">
+  <input type="hidden" name="retURL" value="https://tusitio.com/gracias.html">
+ 
+  <!-- CUIT -->
+  <label for="00NWE000003kci5">CUIT*</label>
+  <input id="00NWE000003kci5" name="00NWE000003kci5" type="text" maxlength="11" required placeholder="Sólo números (11 dígitos)" title="Campo numérico de 11 dígitos">
+ 
+  <!-- Razón Social -->
+  <label for="company">Razón Social*</label>
+  <input id="company" name="company" type="text" maxlength="40" required placeholder="Ej: JJ SRL" title="Campo de texto obligatorio">
+ 
+  <!-- Nombre y Apellido -->
+  <label for="first_name">Nombre*</label>
+  <input id="first_name" name="first_name" type="text" maxlength="40" required placeholder="Nombre" title="Campo de texto obligatorio">
+ 
+  <label for="last_name">Apellido*</label>
+  <input id="last_name" name="last_name" type="text" maxlength="80" required placeholder="Apellido" title="Campo de texto obligatorio">
+ 
+  <!-- Tipo de teléfono -->
+  <label for="00NWE000003x0v7">Tipo de teléfono*</label>
+  <select id="00NWE000003x0v7" name="00NWE000003x0v7" required title="Seleccione tipo de teléfono">
+    <option value="">--Seleccione--</option>
+    <option value="Celular">Celular</option>
+    <option value="Fijo">Fijo</option>
+  </select>
+ 
+  <!-- Número de teléfono -->
+  <label for="00NWE000003x0yL">Número de teléfono*</label>
+  <input id="00NWE000003x0yL" name="00NWE000003x0yL" type="text" maxlength="10" required placeholder="Ej: 2616551302" title="Campo numérico de 10 dígitos">
+ 
+  <!-- Comentarios -->
+  <label for="00NWE000003x1JJ">Comentarios</label>
+  <textarea id="00NWE000003x1JJ" name="00NWE000003x1JJ" placeholder="Opcional..."></textarea>
+ 
+  <div id="error" style="color: red; display: none; margin-top: 10px;">Completar todos los campos obligatorios.</div>
+ 
+  <br>
+ 
+  <button type="submit">Enviar</button>
+  <button type="button" id="cancelar">Cancelar</button>
+ 
+</form>
+ 
+<script>
+  const form = document.getElementById("webToLeadForm");
+  const error = document.getElementById("error");
+  const cancelar = document.getElementById("cancelar");
+ 
+  form.addEventListener("submit", function (e) {
+    const cuit = document.getElementById("00NWE000003kci5").value.trim();
+    const company = document.getElementById("company").value.trim();
+    const first = document.getElementById("first_name").value.trim();
+    const last = document.getElementById("last_name").value.trim();
+    const tipoTel = document.getElementById("00NWE000003x0v7").value.trim();
+    const tel = document.getElementById("00NWE000003x0yL").value.trim();
+ 
+    if (!cuit || !company || !first || !last || !tipoTel || !tel) {
+      e.preventDefault();
+      error.textContent = "Completar todos los campos obligatorios.";
+      error.style.display = "block";
+      return;
+    }
+ 
+    if (!/^\d{11}$/.test(cuit)) {
+      e.preventDefault();
+      error.textContent = "El CUIT debe tener 11 dígitos numéricos.";
+      error.style.display = "block";
+      return;
+    }
+ 
+    if (!/^\d{10}$/.test(tel)) {
+      e.preventDefault();
+      error.textContent = "El número de teléfono debe tener 10 dígitos.";
+      error.style.display = "block";
+      return;
+    }
+ 
+    error.style.display = "none";
+  });
+ 
+  cancelar.addEventListener("click", function () {
+    form.reset();
+    error.style.display = "none";
+  });
+</script>
+
+ 
